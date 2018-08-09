@@ -78,20 +78,26 @@ class App extends Component {
         <nav className="navbar pure-menu pure-menu-horizontal">
             <a href="#" className="pure-menu-heading pure-menu-link">Ether Flow</a>
         </nav>
-
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h1>Got a question?</h1>
-              <p>Post it and get a beautiful answer!</p>
-              <h2>Got an answer?</h2>
-              <p>Answer the question with a Haiku, Limerick, or Freestyle Rap.</p>
-              <p>If your flow is sick, you will get rewarded in ether!</p>
-              <p>fan of a wordsmith? send him a tip!</p>
-              /*
-              <p>Try changing the value stored on <strong>line 59</strong> of App.js.</p>
-              <p>The stored value is: {this.state.storageValue}</p>
-          */
+              <h2>What is a Flow?</h2>
+              <p>a poem, a verse, a lyric, etc</p>
+              <button>Request New Flow</button><br/>
+              <button>Post New Flow</button>
+
+              <h2>How it works?</h2>
+              <ol>
+                 <li>Ask a question</li>
+                 <li>Post a reward</li>
+                 <li>Choose the best response</li>
+              </ol>
+              <ol>
+                 <li>Answer a question</li>
+                 <li>Answer it beautifully</li>
+                 <li>Get Money</li>
+              </ol>
+              <button>Explore</button>
             </div>
           </div>
         </main>
