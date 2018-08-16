@@ -12,21 +12,22 @@ class App extends Component {
     super(props)
 
     this.state = {
-      storageValue: 0,
-      web3: null
+      web3: null,
+      account: '0x0',
+      owner: '0x0',
+      questions: [],
+      flows: [],
     }
   }
 
   componentWillMount() {
     // Get network provider and web3 instance.
     // See utils/getWeb3 for more info.
-
     getWeb3
     .then(results => {
       this.setState({
         web3: results.web3
       })
-
       // Instantiate contract once web3 provided.
       this.instantiateContract()
     })
@@ -48,28 +49,22 @@ class App extends Component {
     etherflow.setProvider(this.state.web3.currentProvider)
 
     // Declaring this for later so we can chain functions on SimpleStorage.
-  /*
-    var etherflowInstance
-
+    let etherflowInstance
     // Get accounts.
 
     this.state.web3.eth.getAccounts((error, accounts) => {
       etherflow.deployed().then((instance) => {
         etherflowInstance = instance
-
-        // Stores a given value, 5 by default.
-        return simpleStorageInstance.set(100, {from: accounts[0]})
+        return this.setState({ account: accounts[0] })
       }).then((result) => {
-        // Get the value from the contract to prove it worked.
-        return simpleStorageInstance.get.call(accounts[0])
+        return this.setState({ questions: this.state.questions.push(etherflowInstance.getQuestion()) })
       }).then((result) => {
-        // Update state with the result.
-        return this.setState({ storageValue: result.c[0] })
+        return this.setState({ flows: this.state.flows.push(etherflowInstance.getFlowArray()) })
       })
     })
-*/
-
+    
   }
+
 
 
   render() {
@@ -98,7 +93,11 @@ class App extends Component {
                  <li>Get Money</li>
               </ol>
               <button>Explore</button>
+              <p>Your account is: {this.state.account} </p>
+              <p>My questions: {this.state.questions} </p>
+              <p>My flows: {this.state.flows} </p>
             </div>
+
           </div>
         </main>
       </div>
