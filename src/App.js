@@ -13,10 +13,10 @@ class App extends Component {
 
     this.state = {
       web3: null,
-      account: '0x0',
-      owner: '0x0',
-      questions: [],
-      flows: [],
+      account: null,
+      contract: null,
+      reward: [],
+      question: [],
     }
   }
 
@@ -37,65 +37,81 @@ class App extends Component {
   }
 
   instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-
     const contract = require('truffle-contract')
     const etherflow = contract(EtherFlowContract)
     etherflow.setProvider(this.state.web3.currentProvider)
+    var etherflowInstance
 
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    let etherflowInstance
     // Get accounts.
-
     this.state.web3.eth.getAccounts((error, accounts) => {
       etherflow.deployed().then((instance) => {
         etherflowInstance = instance
         return this.setState({ account: accounts[0] })
       }).then((result) => {
-        return this.setState({ questions: this.state.questions.push(etherflowInstance.getQuestion()) })
-      }).then((result) => {
-        return this.setState({ flows: this.state.flows.push(etherflowInstance.getFlowArray()) })
+        return this.setState({ contract: etherflowInstance })
       })
     })
-    
-  }
+}
 
+  onSubmit = async event => {
+  event.preventDefault();
+
+  const contract = await this.state.contract;
+  const account = await this.state.account;
+
+  await contract.newFlowRequest(this.state.question, {
+    from: account,
+    value: this.state.web3.toWei(this.state.reward, "ether"),
+    gas: 300000
+  });
+};
 
 
   render() {
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
-            <a href="#" className="pure-menu-heading pure-menu-link">Ether Flow</a>
+            <a href="#" className="pure-menu-heading pure-menu-link">Haiku Bounty</a>
         </nav>
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h2>What is a Flow?</h2>
-              <p>a poem, a verse, a lyric, etc</p>
-              <button>Request New Flow</button><br/>
-              <button>Post New Flow</button>
+              <h2>What is Haiku Bounty?</h2>
+              <p> Ask a question, post a reward, get a haiku</p>
+              <p> Answer a question with a haiku, get a reward</p>
 
-              <h2>How it works?</h2>
-              <ol>
-                 <li>Ask a question</li>
-                 <li>Post a reward</li>
-                 <li>Choose the best response</li>
-              </ol>
-              <ol>
-                 <li>Answer a question</li>
-                 <li>Answer it beautifully</li>
-                 <li>Get Money</li>
-              </ol>
+              <hr />
+
+              <form onSubmit={this.onSubmit.bind(this)}>
+                <h4>Request New Flow</h4>
+                <div>
+                  <label>Question</label>
+                  <input
+                    question={this.state.question}
+                    onChange={event => this.setState({ question: event.target.value })}
+                  /><br/>
+
+                  <label>Reward</label>
+                  <input
+                    reward={this.state.reward}
+                    onChange={event => this.setState({ reward: event.target.value })}
+                  /><br/>
+
+                </div>
+                <button>Request New Flow</button><br/>
+              </form>
+
+              <hr />
+              <button>Post New Flow</button>
+              <hr />
+                  <div>
+              <p>Current Question is: {this.state.question} </p>
+              <p>Current Reward is :{this.state.reward} ether</p>
+                  </div>
+              <hr />
               <button>Explore</button>
+              <hr />
               <p>Your account is: {this.state.account} </p>
-              <p>My questions: {this.state.questions} </p>
-              <p>My flows: {this.state.flows} </p>
             </div>
 
           </div>

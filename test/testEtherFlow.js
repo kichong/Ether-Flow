@@ -24,7 +24,7 @@ contract("EtherFlow", function(accounts) {
   // test newFlowRequest receives the correct reward and question
   it("newFlowRequest updates reward amount and question", async () => {
     const etherflow = await EtherFlow.deployed();
-    await etherflow.newFlowRequest("will this work?", 1, {
+    await etherflow.newFlowRequest("will this work?", {
       from: owner,
       value: sentAmount
     });
@@ -38,7 +38,7 @@ contract("EtherFlow", function(accounts) {
   // test postNewFlow receives the correct flow and address
   it("postNewFlow receives the correct flow and address", async () => {
     const etherflow = await EtherFlow.deployed();
-    await etherflow.postNewFlow("It'll work, I go berzerk, twerk twerk", 2, {
+    await etherflow.postNewFlow("It'll work, I go berzerk, twerk twerk", {
       from: wordsmith1
     });
     const flow1 = await etherflow.getFlowArray(0, {
@@ -51,7 +51,7 @@ contract("EtherFlow", function(accounts) {
   // test multiple accounts can submit a new flow
   it("can receive flows from multiple accounts", async () => {
     const etherflow = await EtherFlow.deployed();
-    await etherflow.postNewFlow("work? irrelevent, you know it does not matter, smoke weed every day", 2, {
+    await etherflow.postNewFlow("work? irrelevent, you know it does not matter, smoke weed every day", {
       from: wordsmith2
   });
     const flow2 = await etherflow.getFlowArray(1, {

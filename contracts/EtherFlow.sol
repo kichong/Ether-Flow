@@ -5,8 +5,6 @@ import "./CircuitBreaker.sol";
 /// @title Ether Flow
 contract EtherFlow is CircuitBreaker {
 
-    enum FlowType { Haiku, Limerick, Freestyle }
-
     event LogFlowRequested (uint indexed reward);
     event LogFlowSubmitted (uint indexed);
 
@@ -16,20 +14,18 @@ contract EtherFlow is CircuitBreaker {
     struct request {
         string question;
         uint reward;
-        FlowType flowType;
     }
 
     request public newRequest;
 
     ///@notice Post new request for a poem
     ///@param _question New question being asked
-    ///@param _flowType The style of poetry preferred (Haiku, Limerick, or Freestyle)
-    function newFlowRequest(string _question, FlowType _flowType) public payable {
-        require (owner == msg.sender);
+    function newFlowRequest(string _question) public payable {
+        //require (owner == msg.sender);
         require (msg.value > 0);
         uint _reward = msg.value;
         emit LogFlowRequested(_reward);
-        newRequest = request(_question, _reward, _flowType);
+        newRequest = request(_question, _reward);
     }
 
     mapping (address => flow) public wordsmithFlows;
@@ -37,7 +33,6 @@ contract EtherFlow is CircuitBreaker {
     struct flow {
         string flow;
         address wordsmith;
-        FlowType flowType;
         uint flowCount;
     }
 
@@ -45,14 +40,12 @@ contract EtherFlow is CircuitBreaker {
 
     ///@notice Wordsmith post new poem in response to question
     ///@param _flow Poem that answers the question
-    ///@param _flowType The style of poetry (Haiku, Limerick, or Freestyle) that is being used
     ///@return true if flow successfully submitted, false otherwise
-    function postNewFlow(string _flow, FlowType _flowType) public returns(bool) {
+    function postNewFlow(string _flow) public returns(bool) {
         require(msg.sender != owner);
         flowArray.push(flow({
             flow: _flow,
             wordsmith: msg.sender,
-            flowType: _flowType,
             flowCount: flowCount++
         }));
         wordsmithFlows[msg.sender] = flowArray[flowArray.length-1];
@@ -102,9 +95,9 @@ contract EtherFlow is CircuitBreaker {
     }
 
     //@notice to fetch newRequest reward element
-    function getReward() public view returns(uint reward) {
-      reward = newRequest.reward;
-      return reward;
+    function getReward() public view returns(uint rewardValue) {
+      rewardValue = newRequest.reward;
+      return rewardValue;
     }
 
     function getQuestion() public view returns(string question) {
@@ -113,13 +106,11 @@ contract EtherFlow is CircuitBreaker {
     }
 
     function getFlowArray(uint _flowCount) public view returns(
-      string flow,
-      address wordsmith,
-      FlowType flowType) {
-        flow = flowArray[_flowCount].flow;
+      string flowPoem,
+      address wordsmith) {
+        flowPoem = flowArray[_flowCount].flow;
         wordsmith = flowArray[_flowCount].wordsmith;
-        flowType = flowArray[_flowCount].flowType;
-        return (flow, wordsmith, flowType);
+        return (flowPoem, wordsmith);
     }
 
 }
