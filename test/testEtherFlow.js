@@ -14,13 +14,6 @@ contract("EtherFlow", function(accounts) {
     assert.ok(etherflow, "the contract should be deployed");
   });
 
-  // Test that reward is set to 0
-  it("has a an initial reward of 0", async() => {
-    const etherflow = await EtherFlow.deployed();
-    const initialReward = await etherflow.getReward();
-    assert.equal(0, initialReward, "the initial reward should be set to 0");
-  });
-
   // test newFlowRequest receives the correct reward and question
   it("newFlowRequest updates reward amount and question", async () => {
     const etherflow = await EtherFlow.deployed();
@@ -28,20 +21,24 @@ contract("EtherFlow", function(accounts) {
       from: owner,
       value: sentAmount
     });
-    const newReward = await etherflow.getReward();
+    const newReward = await etherflow.seeRewardAmount(1, {
+      from: owner
+    });
     assert.equal(sentAmount, newReward, "the reward should be the same as the sentAmount");
     console.log(web3.fromWei(newReward).toString());
-    const newQuestion = await etherflow.getQuestion();
+    const newQuestion = await etherflow.getQuestion(1, {
+      from: owner
+    });
     assert.equal("will this work?", newQuestion, "the question should be same as what was entered");
   });
 
   // test postNewFlow receives the correct flow and address
   it("postNewFlow receives the correct flow and address", async () => {
     const etherflow = await EtherFlow.deployed();
-    await etherflow.postNewFlow("It'll work, I go berzerk, twerk twerk", {
+    await etherflow.postNewFlow("It'll work, I go berzerk, twerk twerk", 1, {
       from: wordsmith1
     });
-    const flow1 = await etherflow.getFlowArray(0, {
+    const flow1 = await etherflow.getFlowArray(1, {
       from: owner
     });
     assert.equal("It'll work, I go berzerk, twerk twerk", flow1[0], "the flow result and flow inputted should be the same");
@@ -51,10 +48,10 @@ contract("EtherFlow", function(accounts) {
   // test multiple accounts can submit a new flow
   it("can receive flows from multiple accounts", async () => {
     const etherflow = await EtherFlow.deployed();
-    await etherflow.postNewFlow("work? irrelevent, you know it does not matter, smoke weed every day", {
+    await etherflow.postNewFlow("work? irrelevent, you know it does not matter, smoke weed every day", 1, {
       from: wordsmith2
   });
-    const flow2 = await etherflow.getFlowArray(1, {
+    const flow2 = await etherflow.getFlowArray(2, {
       from: owner
     });
     assert.ok(flow2);

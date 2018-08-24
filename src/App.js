@@ -17,6 +17,10 @@ class App extends Component {
       contract: null,
       reward: [],
       question: [],
+      requestArray: [],
+      request1: {},
+      request2: {},
+      request3: {},
     }
   }
 
@@ -34,6 +38,7 @@ class App extends Component {
     .catch(() => {
       console.log('Error finding web3.')
     })
+
   }
 
   instantiateContract() {
@@ -46,9 +51,7 @@ class App extends Component {
     this.state.web3.eth.getAccounts((error, accounts) => {
       etherflow.deployed().then((instance) => {
         etherflowInstance = instance
-        return this.setState({ account: accounts[0] })
-      }).then((result) => {
-        return this.setState({ contract: etherflowInstance })
+        return this.setState({ account: accounts[0], contract: etherflowInstance })
       })
     })
 }
@@ -66,6 +69,40 @@ class App extends Component {
   });
 };
 
+  onClick = async event => {
+    event.preventDefault();
+
+    const contract = await this.state.contract;
+
+//function constructor
+let requestArray = [];
+
+    for (var i = 1; i < 4; i++) {
+
+      let reward0 = await contract.seeRewardAmount(i);
+      let reward1 = await this.state.web3.fromWei(reward0, "ether").toNumber();
+      let question1 = await contract.getQuestion(i);
+      let requestor1 = await contract.getRequestor(i);
+
+      const RequestObject = await function(i) {
+        this.reward = reward1;
+        this.question = question1;
+        this.requestor = requestor1;
+      }
+
+      let newRequest = new RequestObject(i);
+      requestArray[i] = newRequest;
+
+      this.setState({ requestArray: requestArray });
+
+  }
+
+  this.setState({ request1: this.state.requestArray[1] });
+  this.setState({ request2: this.state.requestArray[2] });
+  this.setState({ request3: this.state.requestArray[3] });
+
+}
+
 
   render() {
     return (
@@ -81,35 +118,54 @@ class App extends Component {
               <p> Answer a question with a haiku, get a reward</p>
 
               <hr />
+              <div>
+                <form onSubmit={this.onSubmit.bind(this)}>
+                  <h2>Request New Flow</h2>
 
-              <form onSubmit={this.onSubmit.bind(this)}>
-                <h4>Request New Flow</h4>
-                <div>
-                  <label>Question</label>
-                  <input
-                    question={this.state.question}
-                    onChange={event => this.setState({ question: event.target.value })}
-                  /><br/>
+                    <label>Question</label>
+                    <input
+                      onChange={event => { this.setState({ question: event.target.value })}
+                    }
+                    /><br/>
 
-                  <label>Reward</label>
-                  <input
-                    reward={this.state.reward}
-                    onChange={event => this.setState({ reward: event.target.value })}
-                  /><br/>
-
+                    <label>Reward</label>
+                    <input
+                      onChange={event => { this.setState({ reward: event.target.value })}
+                    }
+                    /><br/>
+                  <button>Request New Flow</button><br/>
+                </form>
                 </div>
-                <button>Request New Flow</button><br/>
-              </form>
-
               <hr />
-              <button>Post New Flow</button>
-              <hr />
+              <h2>List of Requests</h2>
                   <div>
-              <p>Current Question is: {this.state.question} </p>
-              <p>Current Reward is :{this.state.reward} ether</p>
+                    <button onClick={this.onClick.bind(this)} >
+                    Update List
+                    </button>
+                  <ol>
+                    <li> Request #1 </li>
+                      <ul>
+                        <li>Reward is: {this.state.request1.reward + ' ether'} </li>
+                        <li>Requestor address: {this.state.request1.requestor} </li>
+                        <li>Question is: {this.state.request1.question} </li>
+                        <button>Answer</button>
+                      </ul>
+                    <li> Request #2 </li>
+                    <ul>
+                        <li>Reward is: {this.state.request2.reward + ' ether'} </li>
+                        <li>Requestor address: {this.state.request2.requestor} </li>
+                        <li>Question is: {this.state.request2.question} </li>
+                        <button>Answer</button>
+                    </ul>
+                    <li> Request #3 </li>
+                    <ul>
+                        <li>Reward is: {this.state.request3.reward + ' ether'} </li>
+                        <li>Requestor address: {this.state.request3.requestor} </li>
+                        <li>Question is: {this.state.request3.question} </li>
+                        <button>Answer</button>
+                    </ul>
+                  </ol>
                   </div>
-              <hr />
-              <button>Explore</button>
               <hr />
               <p>Your account is: {this.state.account} </p>
             </div>
