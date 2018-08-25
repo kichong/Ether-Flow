@@ -57,4 +57,17 @@ Dependencies: Node, Truffle and Ganache CLI.
 	npm run start
     ```
     
- 
+ ### User Interface
+ I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is incomplete as I did not have time to finish building all the functionality and features that I intended. However, the solidity contract is complete and working as intended and its functionality can be tested using remix.ethereum.org
+ #### Completed UI features
+ * Users are able to post new requests and send an ether bounty by completing the form then clicking `Request New Flow` the button
+ * User current metamask account is displayed
+ * User can update UI with contract state by clicking on the `Update List` button
+ * UI displays the user's submitted request
+ #### Incomplete UI features
+ * Users can submit a flow in response to a question/ request
+ * Submitted flows are displayed next to corresponding question/ request
+ * Requestors can choose wordsmith to collect bounty
+ * Wordsmisths can collect the bounty
+ * Anyone can boost a reward
+ * 
