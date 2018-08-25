@@ -28,13 +28,13 @@ Dependencies: Node, Truffle and Ganache CLI.
    cd etherflow
     ```
 
-2. In different terminal window, run Ganache CLI on port 8545 (the default).
+2. Run Ganache CLI on port 8545 (the default).
 
 	```sh
 	ganache-cli
     ```
 
-3. In etherflow director, compile contracts, migrate contracts to locally running ganche-cli on port 8545.
+3. In etherflow directory, compile contracts, migrate contracts to locally running ganche-cli on port 8545.
 
 	
 	`truffle compile`
