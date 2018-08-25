@@ -70,4 +70,3 @@ Dependencies: Node, Truffle and Ganache CLI.
  * Requestors can choose wordsmith to collect bounty
  * Wordsmisths can collect the bounty
  * Anyone can boost a reward
- * 
