@@ -104,8 +104,6 @@ class App extends Component {
       this.setState({ request1: this.state.requestArray[1] });
       this.setState({ request2: this.state.requestArray[2] });
       this.setState({ request3: this.state.requestArray[3] });
-
-
 }
 
 
@@ -175,6 +173,7 @@ class App extends Component {
                   </div>
               <hr />
               <p>Your account is: {this.state.account} </p>
+              <hr />
             </div>
           </div>
         </main>

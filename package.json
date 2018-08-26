@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "dotenv": "^2.0.0",
+    "openzeppelin-solidity": "1.12.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
@@ -97,5 +98,21 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "description": "Consensys Academy 2018 Developer Program Final Project - Ether Flow Bounty Dapp",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kichong/Truffle-React-Ether-Flow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kichong/Truffle-React-Ether-Flow/issues"
+  },
+  "homepage": "https://github.com/kichong/Truffle-React-Ether-Flow#readme"
 }

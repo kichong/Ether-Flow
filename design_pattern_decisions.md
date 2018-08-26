@@ -24,6 +24,7 @@ The contract has different stages where certain functions can only be used after
 |                |                |                 |  newFlowRequest  |
 
 ### Mortal
+This contract imports the Destructible.sol contract from the Open Zeppelin library. This allows the owner to destroy the contract and remove it from the blockchain. 
 
 ### Speed Bump
 Speed bumps slow down actions if there is a malicious actor found. Not used in this contract.

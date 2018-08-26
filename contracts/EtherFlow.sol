@@ -1,9 +1,13 @@
 pragma solidity ^0.4.24;
 
+import 'openzeppelin-solidity/contracts/lifecycle/Destructible.sol';
+
 /// @title Ether Flow
 /// @notice Bounty Dapp for Consensys Developer Academy 2018 Final Project
 /// @author Ki Chong Tran
-contract EtherFlow {
+/// @dev Contract uses openzeppelin library destructible, which is also ownable, to implement the mortal design pattern
+
+contract EtherFlow is Destructible {
 
     ///@notice Counters to track and identify the requests (requestCount) and submissions(flowCount)
     ///@dev Initialize counters to zero
@@ -181,7 +185,7 @@ contract EtherFlow {
     }
 
     ///Circuit Breaker
-    ///@notice Requestor is the account that submits a new question and can activate circuit breaker for their requests
+    ///@notice Requestor is the account that submits a new question and can activate circuit breaker only for their requests
 
     ///@notice circuit breaker is set to off
     bool private stopped = false;
@@ -196,5 +200,12 @@ contract EtherFlow {
 
     ///@notice modifier that can pause functions
     modifier stopInEmergency { require(!stopped); _; }
+
+
+    /// @notice Open Zeppelin Library: Destructible
+    /// @dev Contract owner can call the destroy fuction to delete contract from blockchain and send funds to owner
+    function destroy() public onlyOwner {
+      selfdestruct(owner);
+    }
 
 }
