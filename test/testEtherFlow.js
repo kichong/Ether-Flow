@@ -2,7 +2,7 @@ var EtherFlow = artifacts.require("EtherFlow");
 
 contract("EtherFlow", function(accounts) {
 
-  const owner = accounts[0];
+  const requestor = accounts[0];
   const wordsmith1 = accounts[1];
   const wordsmith2 = accounts[2];
   const booster = accounts[3];
@@ -15,19 +15,19 @@ contract("EtherFlow", function(accounts) {
   });
 
   // test newFlowRequest receives the correct reward and question
-  it("newFlowRequest updates reward amount and question", async () => {
+  it("newFlowRequest updates correct reward amount and question", async () => {
     const etherflow = await EtherFlow.deployed();
     await etherflow.newFlowRequest("will this work?", {
-      from: owner,
+      from: requestor,
       value: sentAmount
     });
     const newReward = await etherflow.seeRewardAmount(1, {
-      from: owner
+      from: requestor
     });
     assert.equal(sentAmount, newReward, "the reward should be the same as the sentAmount");
     console.log(web3.fromWei(newReward).toString());
     const newQuestion = await etherflow.getQuestion(1, {
-      from: owner
+      from: requestor
     });
     assert.equal("will this work?", newQuestion, "the question should be same as what was entered");
   });
@@ -39,7 +39,7 @@ contract("EtherFlow", function(accounts) {
       from: wordsmith1
     });
     const flow1 = await etherflow.getFlowArray(1, {
-      from: owner
+      from: requestor
     });
     assert.equal("It'll work, I go berzerk, twerk twerk", flow1[0], "the flow result and flow inputted should be the same");
     assert.equal(wordsmith1, flow1[1], "the address of the wordsmith should be the same as the addres of the person who posted the new flow");
@@ -52,48 +52,20 @@ contract("EtherFlow", function(accounts) {
       from: wordsmith2
   });
     const flow2 = await etherflow.getFlowArray(2, {
-      from: owner
+      from: requestor
     });
     assert.ok(flow2);
     console.log(flow2);
   });
 
-// test only owner can select Wordsmith function
-  it("only owner can call selectWordsmith function", async () => {
-    const etherflow = await EtherFlow.deployed();
-    try {
-      await etherflow.selectWordsmith(wordsmith1, {
-        from: booster
-      });
-      assert(false);
-    } catch (err) {
-      assert(err);
-    }
-    });
 
-  // test that only selected wordsmith can withdraw or claim the reward
 /*
-  it("allows only the chosenWordsmith to withdraw or claim the reward", async () => {
-    const etherflow = await EtherFlow.deployed();
-    const initialBalance = await web3.eth.getBalance(wordsmith1);
-    await etherflow.newFlowRequest("will this work?", 1, {
-      from: owner,
-      value: sentAmount
-    });
-    await etherflow.postNewFlow("It'll work, I go berzerk, twerk twerk", 2, {
-      from: wordsmith1
-    });
-    await etherflow.selectWordsmith(wordsmith1, {
-      from: owner
-    });
+// test only requestor can select Wordsmith function
 
-    await etherflow.claimReward( {
-      from: wordsmith1
-    });
-    const newBalance = await web3.eth.getBalance(wordsmith1);
-    assert.isAbove(newBalance, initialBalance);
-  });
-  */
+// test that only selected wordsmith can withdraw or claim the reward
 
+// test that circuit breaker works
+
+*/
 
   });

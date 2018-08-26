@@ -67,6 +67,7 @@ class App extends Component {
     value: this.state.web3.toWei(this.state.reward, "ether"),
     gas: 300000
   });
+
 };
 
   onClick = async event => {
@@ -74,10 +75,14 @@ class App extends Component {
 
     const contract = await this.state.contract;
 
-//function constructor
-let requestArray = [];
+    let requestArray = [];
 
-    for (var i = 1; i < 4; i++) {
+    let length = await contract.getLength();
+    length = length.toString();
+    console.log(length);
+
+
+    for (var i = 1; i <= length ; i++) {
 
       let reward0 = await contract.seeRewardAmount(i);
       let reward1 = await this.state.web3.fromWei(reward0, "ether").toNumber();
@@ -94,12 +99,12 @@ let requestArray = [];
       requestArray[i] = newRequest;
 
       this.setState({ requestArray: requestArray });
-
   }
 
-  this.setState({ request1: this.state.requestArray[1] });
-  this.setState({ request2: this.state.requestArray[2] });
-  this.setState({ request3: this.state.requestArray[3] });
+      this.setState({ request1: this.state.requestArray[1] });
+      this.setState({ request2: this.state.requestArray[2] });
+      this.setState({ request3: this.state.requestArray[3] });
+
 
 }
 
@@ -108,14 +113,16 @@ let requestArray = [];
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
-            <a href="#" className="pure-menu-heading pure-menu-link">Haiku Bounty</a>
+            <a href="#" className="pure-menu-heading pure-menu-link">Ether Flow</a>
         </nav>
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h2>What is Haiku Bounty?</h2>
-              <p> Ask a question, post a reward, get a haiku</p>
-              <p> Answer a question with a haiku, get a reward</p>
+              <h2>What is Ether Flow?</h2>
+              <p> Ask a question, post a reward, get a flow</p>
+              <p> Answer a question with a flow, get a reward</p>
+              <h4> What is a flow? </h4>
+              <p> A lyric, rap, or poem - preferably clever or funny </p>
 
               <hr />
               <div>
@@ -169,7 +176,6 @@ let requestArray = [];
               <hr />
               <p>Your account is: {this.state.account} </p>
             </div>
-
           </div>
         </main>
       </div>
