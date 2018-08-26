@@ -59,7 +59,7 @@ Dependencies: Node, Truffle and Ganache CLI.
 ```
     
  ### User Interface
- I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is very rudimentary and incomplete as I did not have time to finish building all the front-end functionality and features that I intended. However, the solidity contract is complete and its logic is working as intended. Complete functionality of the smart contract can be tested using `truffle test` or by copying and pasting the EtherFlow.sol code into remix.ethereum.org
+ I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is very rudimentary and incomplete as I did not have time to finish building all the front-end functionality and features that I intended. However, the solidity contract is complete and its logic is working as intended. Complete functionality of the smart contract can be tested using `truffle test` or by copying and pasting the EtherFlow.sol code into remix.ethereum.org and deleting the zeppelin library references at the beginning and end of the contract.
  #### Completed UI features
  * Users are able to post new requests and send an ether bounty by completing the form then clicking the *Request New Flow* button
  * User current metamask account is displayed (refresh page after switched from accounts)
