@@ -17,7 +17,7 @@ The contract has different stages where certain functions can only be used after
 
 | Stage 1        | Stage 2        | Stage 3         |  Stage 4         |
 | -------------  |:-------------: | -------------:  | -------------:   |
-| **newFlowRequest** | **postNewFlow**    | **selectWordsmith** |  **claimReward**     |
+| **_newFlowRequest_** | **_postNewFlow_**    | **_selectWordsmith_** |  **_claimReward_**     |
 |                | boostReward    | postNewFlow     |  selectWordsmith |
 |                | newFlowRequest | boostReward     |  postNewFlow     |
 |                |                | newFlowRequest  |  boostReward     |

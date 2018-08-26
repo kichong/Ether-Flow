@@ -16,9 +16,9 @@ contract EtherFlow {
 
     ///@notice Events to notify when a new request or flow has been submitted
     ///@dev Users would be notified when there was a new request and the amount of the posted reward
-    event LogFlowRequested (uint indexed reward);
+    event LogFlowRequested (uint reward);
     ///@dev Requestors would be notified when their request was responded to
-    event LogFlowSubmitted (uint indexed);
+    event LogFlowSubmitted (uint requestCount);
 
     ///@notice Structure for each new request containing all the necessary information
     struct request {
@@ -84,7 +84,7 @@ contract EtherFlow {
     mapping (uint => address) public chosenWordsmith;
 
     ///@notice Wordsmith is notified if selected so they can collect their reward
-    event LogWordsmithChosen (address);
+    event LogWordsmithChosen (address chosenWordsmithAddress);
 
     ///@notice Flow requester selects wordsmith that will be able to claim reward
     ///@dev Only the requestor is able to select the winning wordsmith
@@ -98,8 +98,8 @@ contract EtherFlow {
         require(requestArray[idR].requestor == msg.sender);
         require(requestArray[idR].reward > 0);
         require(requestArray[idR].requestCount == flowArray[idF].requestCount);
-        chosenWordsmith[requestCount] = (flowArray[idF].wordsmith);
-        emit LogWordsmithChosen(flowArray[idF].wordsmith);
+        chosenWordsmith[requestCount] = flowArray[idF].wordsmith;
+        emit LogWordsmithChosen(chosenWordsmith[requestCount]);
     }
 
     ///@notice ChosenWordsmith can claim their reward
@@ -149,8 +149,16 @@ contract EtherFlow {
     ///@param _requestCount Identifies which request to get the requestor address from
     ///@return requestorAddress
     function getRequestor(uint _requestCount) public view returns(address requestorAddress) {
-    requestorAddress = requestArray[_requestCount-1].requestor;
-    return requestorAddress;
+      requestorAddress = requestArray[_requestCount-1].requestor;
+      return requestorAddress;
+    }
+
+    ///@notice Gets the chosenWordsmith address for any request
+    ///@param _requestCount Identifies which request to get the requestor address from
+    ///@return requestorAddress
+    function getChosenWordsmith(uint _requestCount) public view returns(address chosenWordsmithAddress) {
+      chosenWordsmithAddress = chosenWordsmith[_requestCount];
+      return chosenWordsmithAddress;
     }
 
     ///@notice Gets the flow and address of a wordsmith
