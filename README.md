@@ -22,30 +22,31 @@ Dependencies: Node, Truffle and Ganache CLI.
 
 1. Create new directory, clone the repo, move into the directory.
 
-	```sh
-   mkdir etherflow
-   git clone https://github.com/kichong/Truffle-React-Ether-Flow.git
-   cd etherflow
-    ```
+```
+    mkdir etherflow
+    git clone https://github.com/kichong/Truffle-React-Ether-Flow.git
+    cd etherflow
+```
 
 2. Run Ganache CLI on port 8545 (the default).
 
-	```sh
-	ganache-cli
-    ```
+```
+    ganache-cli
+```
 
 3. In etherflow directory, compile contracts, migrate contracts to locally running ganche-cli on port 8545.
 
-	
-	`truffle compile`
-  `truffle migrate --reset`
+```	
+    truffle compile
+    truffle migrate --reset
+```
  
     
 4.  Run contract tests.
 
-	```sh
-	truffle test
-    ```
+```
+    truffle test
+```
 
 5. Copy seedwords or mnemonic from Ganache-CLI.
 
@@ -53,16 +54,16 @@ Dependencies: Node, Truffle and Ganache CLI.
 
 7. Run the frontend on http://localhost:3000).
 
-	```sh
-	npm run start
-    ```
+```
+    npm run start
+```
     
  ### User Interface
- I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is incomplete as I did not have time to finish building all the functionality and features that I intended. However, the solidity contract is complete and working as intended and its functionality can be tested using remix.ethereum.org
+ I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is incomplete as I did not have time to finish building all the functionality and features that I intended. However, the solidity contract is complete and working as intended. Complete functionality of the smart contract can be tested using `truffle test` or by copying and pasting the EtherFlow.sol code into remix.ethereum.org
  #### Completed UI features
- * Users are able to post new requests and send an ether bounty by completing the form then clicking `Request New Flow` the button
- * User current metamask account is displayed
- * User can update UI with contract state by clicking on the `Update List` button
+ * Users are able to post new requests and send an ether bounty by completing the form then clicking the *Request New Flow* button
+ * User current metamask account is displayed (refresh page after switched from accounts)
+ * User can update UI with contract state by clicking on the *Update List* button (refresh page to clear list)
  * UI displays the user's submitted request
  #### Incomplete UI features
  * Users can submit a flow in response to a question/ request
