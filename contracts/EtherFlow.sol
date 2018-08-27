@@ -9,7 +9,7 @@ import 'openzeppelin-solidity/contracts/lifecycle/Destructible.sol';
 
 contract EtherFlow is Destructible {
 
-    ///@notice Counters to track and identify the requests (requestCount) and submissions(flowCount)
+    ///@notice Counters to track and identify the requests (requestCount) and flow submissions (flowCount)
     ///@dev Initialize counters to zero
     uint requestCount = 0;
     uint flowCount = 0;
@@ -66,7 +66,7 @@ contract EtherFlow is Destructible {
 
     ///@notice Wordsmith can post a new flow in response to a question
     ///@dev Flow, wordsmith address, requestCount identifier, and flowCount is stored in flowArray
-    ///@param _flow Lyric, poem, or rap that answers the question
+    ///@param _flow Lyric, poem, or rap that answers the question of corresponding request
     ///@param _requestCount Number identifier that corresponds to the question being answered
     /// Uint id is used so that requestCount number 1 corresponds to the first element in the array
     ///@return True if flow successfully submitted, false otherwise
@@ -93,7 +93,7 @@ contract EtherFlow is Destructible {
     ///@notice Flow requester selects wordsmith that will be able to claim reward
     ///@dev Only the requestor is able to select the winning wordsmith
     /// Uint idR is used so that requestCount number 1 corresponds to the first element in the array and so on
-    /// Uint idF is used so that flowXount number 1 corresponds to the first element in the array and so on
+    /// Uint idF is used so that flowCount number 1 corresponds to the first element in the array and so on
     ///@param _flowCount Identifies the flow and wordsmith who submitted the flow
     ///@param _requestCount Identifies the request
     function selectWordsmith(uint _requestCount, uint _flowCount) public {
@@ -123,7 +123,7 @@ contract EtherFlow is Destructible {
     event LogRewardIncreased(uint);
 
     ///@notice Boost question reward
-    ///@dev Anyone can increase the reward amount of a request by sending in more etherflow
+    ///@dev Anyone can increase the reward amount of a request by sending in more ether to the request
     ///@param _requestCount Identifies which request to send ether to
     function boostReward(uint _requestCount) public payable stopInEmergency {
         uint id = _requestCount-1;
