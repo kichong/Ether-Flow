@@ -25,24 +25,26 @@ contract("EtherFlow", function(accounts) {
       from: requestor
     });
     assert.equal(sentAmount, newReward, "the reward should be the same as the sentAmount");
-    console.log(web3.fromWei(newReward).toString());
     const newQuestion = await etherflow.getQuestion(1, {
       from: requestor
     });
     assert.equal("sup Snoop?", newQuestion, "the question should be same as what was entered");
+    console.log(newQuestion);
+    console.log(newReward.toString());
   });
 
   // test postNewFlow receives the correct flow and address
   it("postNewFlow receives the correct flow and address", async () => {
     const etherflow = await EtherFlow.deployed();
-    await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherfuckin' D-O-double-G", 1, {
+    await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherf**kin' D-O-double-G", 1, {
       from: wordsmith1
     });
     const flow1 = await etherflow.getFlowArray(1, {
       from: requestor
     });
-    assert.equal("La-da-da-da-dahh, It's the motherfuckin' D-O-double-G", flow1[0], "the flow result and flow inputted should be the same");
+    assert.equal("La-da-da-da-dahh, It's the motherf**kin' D-O-double-G", flow1[0], "the flow result and flow inputted should be the same");
     assert.equal(wordsmith1, flow1[1], "the address of the wordsmith should be the same as the addres of the person who posted the new flow");
+    console.log(flow1);
   });
 
   // test multiple accounts can submit a new flow
@@ -58,14 +60,14 @@ contract("EtherFlow", function(accounts) {
     console.log(flow2);
   });
 
-// test only requestor can use the selectWordsmith function
+// test requestor can use the selectWordsmith function and the correct address is chosen
 it("the selectWordsmith function selects the correct wordmsith", async () => {
   const etherflow = await EtherFlow.deployed();
   await etherflow.newFlowRequest("sup Snoop?", {
     from: requestor,
     value: sentAmount
   });
-  await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherfuckin' D-O-double-G", 1, {
+  await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherf**kin' D-O-double-G", 1, {
     from: wordsmith1
   });
   await etherflow.selectWordsmith(1, 1, {
@@ -74,20 +76,20 @@ it("the selectWordsmith function selects the correct wordmsith", async () => {
   const chosenWordsmith = await etherflow.getChosenWordsmith(1, {
     from: requestor
   });
-  console.log(await etherflow.getChosenWordsmith(1, {from: requestor}));
+  console.log(chosenWordsmith);
   assert.equal(wordsmith1, chosenWordsmith, "the requestor should be able to select the chosenWordsmith");
 });
 
-// test that only selected wordsmith can withdraw or claim the reward
-it("the selectWordsmith function selects the correct wordmsith", async () => {
+// test that selected wordsmith can withdraw or claim the reward
+it("the chosenWordsmith is able to withdraw the reward", async () => {
   const etherflow = await EtherFlow.deployed();
   await etherflow.newFlowRequest("sup Snoop?", {
     from: requestor,
     value: sentAmount
   });
   const initialBalance = await web3.eth.getBalance(wordsmith1);
-  console.log(initialBalance.toString());
-  await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherfuckin' D-O-double-G", 1, {
+  console.log("initial balance is " + initialBalance.toString());
+  await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherf**kin' D-O-double-G", 1, {
     from: wordsmith1
   });
   await etherflow.selectWordsmith(1, 1, {
@@ -97,12 +99,8 @@ it("the selectWordsmith function selects the correct wordmsith", async () => {
     from: wordsmith1
   });
   const newBalance = await web3.eth.getBalance(wordsmith1);
-  console.log(newBalance.toString());
-  assert.isAtLeast(balance, initialBalance, "the chosenWordsmith should get the reward transferred to this balance");
+  console.log("new balance is " + newBalance.toString());
+  assert.isAbove(newBalance, initialBalance, "the chosenWordsmith should get the reward transferred to this balance");
 });
-
-// test that circuit breaker works
-
-
 
   });

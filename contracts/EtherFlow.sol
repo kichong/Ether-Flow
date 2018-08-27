@@ -5,7 +5,7 @@ import 'openzeppelin-solidity/contracts/lifecycle/Destructible.sol';
 /// @title Ether Flow
 /// @notice Bounty Dapp for Consensys Developer Academy 2018 Final Project
 /// @author Ki Chong Tran
-/// @dev Contract uses openzeppelin library destructible, which is also ownable, to implement the mortal design pattern
+/// @dev Contract uses Open Zeppelin library destructible, which is also ownable, to implement the mortal design pattern
 
 contract EtherFlow is Destructible {
 
@@ -96,14 +96,14 @@ contract EtherFlow is Destructible {
     /// Uint idF is used so that flowXount number 1 corresponds to the first element in the array and so on
     ///@param _flowCount Identifies the flow and wordsmith who submitted the flow
     ///@param _requestCount Identifies the request
-    function selectWordsmith(uint _flowCount, uint _requestCount) public {
+    function selectWordsmith(uint _requestCount, uint _flowCount) public {
         uint idR = _requestCount-1;
         uint idF = _flowCount-1;
         require(requestArray[idR].requestor == msg.sender);
         require(requestArray[idR].reward > 0);
         require(requestArray[idR].requestCount == flowArray[idF].requestCount);
-        chosenWordsmith[requestCount] = flowArray[idF].wordsmith;
-        emit LogWordsmithChosen(chosenWordsmith[requestCount]);
+        chosenWordsmith[_requestCount] = flowArray[idF].wordsmith;
+        emit LogWordsmithChosen(chosenWordsmith[_requestCount]);
     }
 
     ///@notice ChosenWordsmith can claim their reward
@@ -199,13 +199,6 @@ contract EtherFlow is Destructible {
     }
 
     ///@notice modifier that can pause functions
-    modifier stopInEmergency { require(!stopped); _; }
-
-
-    /// @notice Open Zeppelin Library: Destructible
-    /// @dev Contract owner can call the destroy fuction to delete contract from blockchain and send funds to owner
-    function destroy() public onlyOwner {
-      selfdestruct(owner);
-    }
+    modifier stopInEmergency { require(stopped == false); _; }
 
 }
