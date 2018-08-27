@@ -20,7 +20,7 @@ Questions should be answered using "flows" - lyrics, poems, or raps.
 ### Set Up
 Dependencies: Node, Truffle, and Ganache-CLI.
 
-Clone the repo, move into the directory, install node modules.
+Clone the github repo, move into the directory, install node modules.
 
 ```
     git clone https://github.com/kichong/Ether-Flow.git
@@ -29,13 +29,13 @@ Clone the repo, move into the directory, install node modules.
 
 ```
 
-Run Ganache CLI on port 8545 (the default).
+In a separate terminal, run Ganache-CLI on port 8545 (the default).
 
 ```
     ganache-cli
 ```
 
-In etherflow directory, compile contracts, migrate contracts to locally running ganche-cli on port 8545.
+In ether-flow directory, compile contracts, migrate contracts to locally running Ganche-CLI on port 8545.
 
 ```
     truffle compile
@@ -49,9 +49,9 @@ Run contract tests.
     truffle test
 ```
 
-Copy seedwords or mnemonic from Ganache-CLI.
+Copy seedwords/ mnemonic from Ganache-CLI.
 
-Open browser with metamask, log into metamask with above copied seed words, set it to a private network (localhost 8545).
+Open browser with metamask, log into metamask with above copied seed words, set metamask to a private network (localhost 8545).
 
 Run the frontend on http://localhost:3000).
 
@@ -62,7 +62,7 @@ Run the frontend on http://localhost:3000).
  ### User Interface
  I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is very rudimentary and incomplete as I did not have the skills or time to acquire the skills to finish building all the front-end functionality and features that I intended. However, the solidity contract is complete and its logic is working as intended. Complete functionality of the smart contract can be tested using `truffle test` or by copying and pasting the EtherFlow.sol code into Remix and deleting the zeppelin library references at the beginning of the contract.
  #### Completed UI features
- * Users are able to post new requests and send an ether bounty by completing the form then clicking the *Request New Flow* button
+ * Users is able to post new requests and send an ether bounty by completing the form then clicking the *Request New Flow* button
  * User current metamask account is displayed (refresh page after switching accounts)
  * User can update UI with contract state by clicking on the *Update List* button (refresh page before updating list)
  * UI displays the user's submitted request with correct reward amount, question, and requestor address
@@ -70,5 +70,5 @@ Run the frontend on http://localhost:3000).
  * Users can submit a flow in response to a question/ request
  * Submitted flows are displayed next to corresponding question/ request
  * Requestors can choose wordsmith to collect bounty
- * Wordsmisths can collect the bounty
+ * Wordsmiths can collect the bounty
  * Anyone can boost a reward
