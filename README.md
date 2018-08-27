@@ -18,23 +18,24 @@ Questions should be answered using "flows" - lyrics, poems, or raps.
   * boost the reward in a post to increase the incentives for answering the question.
   
 ### Set Up
-Dependencies: Node, Truffle and Ganache CLI.
+Dependencies: Node, Truffle, and Ganache-CLI.
 
-1. Create new directory, clone the repo, move into the directory.
+Clone the repo, move into the directory, install node modules.
 
 ```
-    mkdir etherflow
     git clone https://github.com/kichong/Ether-Flow.git
-    cd etherflow
+    cd ether-flow
+    npm install
+    
 ```
 
-2. Run Ganache CLI on port 8545 (the default).
+Run Ganache CLI on port 8545 (the default).
 
 ```
     ganache-cli
 ```
 
-3. In etherflow directory, compile contracts, migrate contracts to locally running ganche-cli on port 8545.
+In etherflow directory, compile contracts, migrate contracts to locally running ganche-cli on port 8545.
 
 ```	
     truffle compile
@@ -42,29 +43,29 @@ Dependencies: Node, Truffle and Ganache CLI.
 ```
  
     
-4.  Run contract tests.
+Run contract tests.
 
 ```
     truffle test
 ```
 
-5. Copy seedwords or mnemonic from Ganache-CLI.
+Copy seedwords or mnemonic from Ganache-CLI.
 
-6. Open browser with metamask, log into metamask with above seed words, set it to a private network (localhost 8545).
+Open browser with metamask, log into metamask with above copied seed words, set it to a private network (localhost 8545).
 
-7. Run the frontend on http://localhost:3000).
+Run the frontend on http://localhost:3000).
 
 ```
     npm run start
 ```
     
  ### User Interface
- I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is very rudimentary and incomplete as I did not have time to finish building all the front-end functionality and features that I intended. However, the solidity contract is complete and its logic is working as intended. Complete functionality of the smart contract can be tested using `truffle test` or by copying and pasting the EtherFlow.sol code into remix.ethereum.org and deleting the zeppelin library references at the beginning and end of the contract.
+ I used the truffle react box to build the user interface. I have no front-end or web development experience so the user interface is very rudimentary and incomplete as I did not have the skills or the time to finish building all the front-end functionality and features that I intended. However, the solidity contract is complete and its logic is working as intended. Complete functionality of the smart contract can be tested using `truffle test` or by copying and pasting the EtherFlow.sol code into Remix and deleting the zeppelin library references at the beginning of the contract.
  #### Completed UI features
  * Users are able to post new requests and send an ether bounty by completing the form then clicking the *Request New Flow* button
- * User current metamask account is displayed (refresh page after switched from accounts)
+ * User current metamask account is displayed (refresh page after switching accounts)
  * User can update UI with contract state by clicking on the *Update List* button (refresh page before updating list)
- * UI displays the user's submitted request
+ * UI displays the user's submitted request with correct reward amount, question, and requestor address
  #### Incomplete UI features
  * Users can submit a flow in response to a question/ request
  * Submitted flows are displayed next to corresponding question/ request
