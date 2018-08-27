@@ -24,7 +24,7 @@ Dependencies: Node, Truffle and Ganache CLI.
 
 ```
     mkdir etherflow
-    git clone https://github.com/kichong/Truffle-React-Ether-Flow.git
+    git clone https://github.com/kichong/Ether-Flow.git
     cd etherflow
 ```
 
