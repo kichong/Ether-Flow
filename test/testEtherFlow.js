@@ -30,7 +30,7 @@ contract("EtherFlow", function(accounts) {
     });
     assert.equal("sup Snoop?", newQuestion, "the question should be same as what was entered");
     console.log(newQuestion);
-    console.log(newReward.toString());
+    console.log(newReward);
   });
 
   // test postNewFlow receives the correct flow and address
@@ -87,8 +87,8 @@ it("the chosenWordsmith is able to withdraw the reward", async () => {
     from: requestor,
     value: sentAmount
   });
-  const initialBalance = await web3.eth.getBalance(wordsmith1);
-  console.log("initial balance is " + initialBalance.toString());
+  const initialBalance = await web3.eth.getBalance(wordsmith1).toNumber();
+  console.log("initial balance is " + initialBalance);
   await etherflow.postNewFlow("La-da-da-da-dahh, It's the motherf**kin' D-O-double-G", 1, {
     from: wordsmith1
   });
@@ -98,8 +98,8 @@ it("the chosenWordsmith is able to withdraw the reward", async () => {
   await etherflow.claimReward(1, {
     from: wordsmith1
   });
-  const newBalance = await web3.eth.getBalance(wordsmith1);
-  console.log("new balance is " + newBalance.toString());
+  const newBalance = await web3.eth.getBalance(wordsmith1).toNumber();
+  console.log("new balance is " + newBalance);
   assert.isAbove(newBalance, initialBalance, "the chosenWordsmith should get the reward transferred to this balance");
 });
 
