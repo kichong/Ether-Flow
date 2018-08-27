@@ -30,7 +30,7 @@ contract("EtherFlow", function(accounts) {
     });
     assert.equal("sup Snoop?", newQuestion, "the question should be same as what was entered");
     console.log(newQuestion);
-    console.log(newReward);
+    console.log(newReward.toNumber());
   });
 
   // test postNewFlow receives the correct flow and address
